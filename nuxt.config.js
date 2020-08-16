@@ -65,7 +65,8 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/vuetify-module
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/google-analytics'
   ],
   /*
    ** Nuxt.js modules
@@ -113,5 +114,9 @@ export default {
     }
   },
 
-  loadingIndicator: '@/template/loading.html'
+  loadingIndicator: '@/template/loading.html',
+
+  googleAnalytics: {
+    id: 'UA-73384256-8'
+  }
 };
