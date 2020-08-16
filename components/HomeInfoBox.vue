@@ -44,7 +44,7 @@ export default {
     <VCol cols="12">
       <VCard elevation="10">
         <VCardTitle>
-          Scrutinized POI cheatsheet
+          Scrutinized Report Nexus
           <VChip color="grey darken-2" class="ml-2">
             {{ $version }}
           </VChip>
