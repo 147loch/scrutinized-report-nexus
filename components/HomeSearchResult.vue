@@ -21,7 +21,7 @@ export default {
     sortedEvidencePool() {
       if (this.sort) {
         return this.data.EvidencePool.slice().sort((a, b) => {
-          const c = this.data.EvidencePool.filter(i => i.EvidenceType === b.EvidenceType).length - this.data.EvidencePool.filter(i => i.EvidenceType === a.EvidenceType).length;
+          const c = (Math.min(this.data.EvidencePool.filter(i => i.EvidenceType === b.EvidenceType).length, 4) - Math.min(this.data.EvidencePool.filter(i => i.EvidenceType === a.EvidenceType).length, 4));
           if (c === 0) {
             return this.customSort.findIndex(i => i.type === a.EvidenceType) - this.customSort.findIndex(i => i.type === b.EvidenceType);
           }
