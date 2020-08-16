@@ -98,7 +98,7 @@ export default {
               />
               <VCard class="mt-3" outlined>
                 <VContainer fluid>
-                  <h4 v-if="show">
+                  <h4 v-if="sort">
                     Custom evidence order
                   </h4>
                   <h4 v-else>
