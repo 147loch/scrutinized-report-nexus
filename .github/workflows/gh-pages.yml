@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: GitHub Pages Publish
+# only act when push on master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  # generate static site and deploy
+  build-deploy:
+    # Runner
+    runs-on: ubuntu-latest
+
+    # Checkout the repo
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Use node 14 to package
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with: 
+        node-version: '14'
+
+    - name: Automated version bump
+      uses: phips28/gh-action-bump-version@master
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    # Setup cache
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    # Install deps
+    - run: npm ci
+    
+    # Generate the site
+    - run: npm run generate
+    
+    # Deploy to github
+    - name: Deploy to Github Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        deploy_key: ${{ secrets.DEPLOY_KEY }}
+        publish_dir: ./dist

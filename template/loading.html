@@ -1,0 +1,60 @@
+<style>
+  .loading {
+    background-color: #212121;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .waiting {
+    font-size: 1.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    font-weight: 600;
+    font-family: Roboto, sans-serif;
+    color: #fff;
+  }
+
+  .waiting .letter {
+    display: inline-block;
+    line-height: 1em;
+  }
+
+  body, html, .loading {
+    overflow: hidden;
+  }
+</style>
+
+<div class="loading">
+  <h1 class="waiting">Loading Reports</h1>
+</div>
+
+<script src="/loader/anime.min.js"></script>
+
+<script>
+  const waitingWrapper = document.querySelector('.waiting');
+  waitingWrapper.innerHTML = waitingWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+  anime.timeline({loop: true})
+    .add({
+      targets: '.waiting .letter',
+      translateY: [100,0],
+      translateZ: 0,
+      opacity: [0,1],
+      easing: "easeOutExpo",
+      duration: 1400,
+      delay: (el, i) => 300 + 30 * i
+    }).add({
+      targets: '.waiting .letter',
+      translateY: [0,-100],
+      opacity: [1,0],
+      easing: "easeInExpo",
+      duration: 1200,
+      delay: (el, i) => 100 + 30 * i
+    });
+</script>
