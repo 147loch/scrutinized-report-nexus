@@ -4,13 +4,13 @@ import format from 'date-fns/format';
 import compareAsc from 'date-fns/compareAsc';
 import Fuse from 'fuse.js';
 
-import WireFrameLoader from '@/components/search/WireFrameLoader';
+import WireframeLoader from '@/components/search/WireframeLoader';
 
 export default {
   components: {
     AsyncHomeSearchResultsBox: () => ({
       component: import('@/components/HomeSearchResultsBox'),
-      loading: WireFrameLoader,
+      loading: WireframeLoader,
       delay: 50
     })
   },
