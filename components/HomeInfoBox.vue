@@ -68,7 +68,7 @@ export default {
               <p>
                 <strong>Abbreviations definition</strong>
                 <ul>
-                  <li><strong>Avatar</strong>: U - Name Unknown, K - Name Known. Press Ctrl+X to copy the full name of the first search result.</li>
+                  <li><strong>Avatar</strong>: U - Name Unknown, K - Name Known. Press Ctrl+X to copy the full name of the first search result. Press Ctrl+Y to copy the alias of the first search result.</li>
                   <li><strong>Age</strong>: R - Real, F - Fake, Unk - Unknown</li>
                   <li><strong>Height</strong>: R - Real, G - Guess, F - Fake, Unk - Unknown</li>
                   <li><strong>Weight</strong>: R - Real, G - Guess, F - Fake, Unk - Unknown</li>

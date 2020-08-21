@@ -10,7 +10,8 @@ export default {
     keymap() {
       return {
         'ctrl+x': this.copyFirstReportName,
-        'ctrl+c': this.copyFirstReportIMEI
+        'ctrl+c': this.copyFirstReportIMEI,
+        'ctrl+y': this.copyFirstReportAlias
       };
     },
     results() {
@@ -37,6 +38,12 @@ export default {
       event.preventDefault();
       if (this.results.length > 0) {
         this.$copyText(`${this.cache.data[this.results[0]].FirstName} ${this.cache.data[this.results[0]].LastName}`);
+      }
+    },
+    copyFirstReportAlias(event) {
+      event.preventDefault();
+      if (this.results.length > 0) {
+        this.$copyText(this.cache.data[this.results[0]].Alias);
       }
     }
   }
