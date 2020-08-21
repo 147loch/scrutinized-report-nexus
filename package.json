@@ -1,6 +1,6 @@
 {
   "name": "report-lookup",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "scripts": {
     "dev": "nuxt --hostname 172.16.40.15 --port 3000",
