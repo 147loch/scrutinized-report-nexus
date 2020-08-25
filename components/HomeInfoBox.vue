@@ -5,9 +5,16 @@ export default {
   components: {
     Draggable
   },
+  props: {
+    changelog: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
-      hidden: true
+      hidden: true,
+      changelogModal: false
     };
   },
   computed: {
@@ -34,6 +41,10 @@ export default {
       get() {
         return this.$store.state.settings.customSort;
       }
+    },
+
+    reversedChangelog() {
+      return this.changelog.slice().reverse();
     }
   }
 };
@@ -49,6 +60,70 @@ export default {
             {{ $version }}
           </VChip>
           <VSpacer />
+          <VDialog
+            v-model="changelogModal"
+            width="600"
+            scrollable
+          >
+            <template #activator="{on, attrs}">
+              <VBtn
+                icon
+                small
+
+                class="mr-5"
+
+                v-bind="attrs"
+                v-on="on"
+              >
+                <VIcon>mdi-delta</VIcon>
+              </VBtn>
+            </template>
+
+            <VCard>
+              <VCardTitle class="indigo darken-2">
+                Changelog
+                <VSpacer />
+                <VBtn
+                  icon
+
+                  @click="changelogModal = false;"
+                >
+                  <VIcon>mdi-close</VIcon>
+                </VBtn>
+              </VCardTitle>
+              <VCardText class="py-0">
+                <VTimeline dense>
+                  <VTimelineItem v-for="change in reversedChangelog" :key="change.version" small fill-dot :color="change.color">
+                    <VRow class="align-center">
+                      <VCol cols="2">
+                        <strong :class="`subtitle-1 font-weight-bold ${change.color}--text`">
+                          {{ change.version }}
+                        </strong>
+                      </VCol>
+                      <VCol>
+                        <strong :class="`headline font-weight-bold ${change.color}--text`">
+                          {{ change.title }}
+                        </strong>
+                        <div v-for="c in change.changes" :key="c.label">
+                          <VChip
+                            label
+                            x-small
+                            class="srn-changelog-label"
+                            :color="c.added ? 'green' : c.modified ? 'blue' : c.neutral ? 'blue-grey' : c.deleted ? 'red' : 'grey'"
+                          >
+                            {{ c.added ? 'Added' : c.modified ? 'Modified' : c.neutral ? 'Info' : c.deleted ? 'Deleted' : 'Unknown' }}
+                          </VChip>
+                          <span class="caption">
+                            {{ c.label }}
+                          </span>
+                        </div>
+                      </VCol>
+                    </VRow>
+                  </VTimelineItem>
+                </VTimeline>
+              </VCardText>
+            </VCard>
+          </VDialog>
           <VBtn
             icon
             small
@@ -145,5 +220,9 @@ export default {
 <style scoped>
   .pointer {
     cursor: n-resize;
+  }
+
+  .srn-changelog-label {
+    line-height: 0.98em;
   }
 </style>
