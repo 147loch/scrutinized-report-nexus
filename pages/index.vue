@@ -4,7 +4,7 @@ import Fuse from 'fuse.js';
 
 import WireframeLoader from '@/components/search/WireframeLoader';
 
-const POI_CACHE_URL = '/cache.gz';
+const CACHE_ITEMS = 40;
 const CHANGELOG_URL = 'https://gist.githubusercontent.com/147loch/22746bd7470840377db20f0b1fcadc66/raw/srn-changelog.json';
 
 export default {
@@ -27,12 +27,35 @@ export default {
       ]
     };
 
-    const [poiCacheArchive, appChangelog] = await Promise.all([
-      fetch(POI_CACHE_URL).then(response => response.arrayBuffer()),
-      fetch(CHANGELOG_URL).then(response => response.json())
-    ]);
+    const awaitArray = [fetch(CHANGELOG_URL).then(response => response.json())];
 
-    const poiCache = JSON.parse(new TextDecoder('utf-8').decode(pako.ungzip(poiCacheArchive)));
+    for (let i = 1; i <= CACHE_ITEMS; i++) {
+      awaitArray.push(fetch(`/cache.chunk-${i}.gz`).then(response => response.arrayBuffer()));
+    }
+
+    const chunks = await Promise.all(awaitArray);
+
+    const appChangelog = chunks[0];
+
+    const poiCache = chunks.slice(1).reduce((accumulator, current) => {
+      const currentParsed = JSON.parse(new TextDecoder('utf-8').decode(pako.ungzip(current)));
+      if (currentParsed.length === 6) {
+        Object.assign(accumulator, currentParsed[0]);
+        for (let i = 1; i < 6; i++) {
+          accumulator.data[currentParsed[i].ID] = currentParsed[i];
+        }
+
+        return accumulator;
+      }
+
+      for (let i = 0; i < 5; i++) {
+        accumulator.data[currentParsed[i].ID] = currentParsed[i];
+      }
+
+      return accumulator;
+    }, {data: {}});
+
+    console.log(poiCache);
 
     return {
       poiCache,

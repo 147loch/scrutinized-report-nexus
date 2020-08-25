@@ -108,7 +108,6 @@ export default {
                           <VChip
                             label
                             x-small
-                            class="srn-changelog-label"
                             :color="c.added ? 'green' : c.modified ? 'blue' : c.neutral ? 'blue-grey' : c.deleted ? 'red' : 'grey'"
                           >
                             {{ c.added ? 'Added' : c.modified ? 'Modified' : c.neutral ? 'Info' : c.deleted ? 'Deleted' : 'Unknown' }}
@@ -220,9 +219,5 @@ export default {
 <style scoped>
   .pointer {
     cursor: n-resize;
-  }
-
-  .srn-changelog-label {
-    line-height: 0.98em;
   }
 </style>
