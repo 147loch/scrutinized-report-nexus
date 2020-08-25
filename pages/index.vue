@@ -99,6 +99,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.$store.commit('resetSearch');
+  },
   methods: {
     toggleFuzzySearch(event) {
       event.preventDefault();
