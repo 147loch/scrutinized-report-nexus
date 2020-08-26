@@ -86,25 +86,23 @@ export default {
   watch: {
     fuzzyText(to) {
       if (to !== '') {
-        console.log(this.fuzzySearch.search(to));
         const results = this.fuzzySearch.search(to).map(r => ({
           firstName: r.item.FirstName,
           lastName: r.item.LastName,
           reportDate: r.item.ReportDate,
           id: r.item.ID,
-          matches: r.matches
+          matches: r.matches,
+          score: `${Math.round((1 - r.score) * 100)}%`
         }));
         this.results = results.slice(0, 10);
         this.resultsTruncated = results.length - 10;
       }
     }
   },
-  mounted() {
-    this.$store.commit('resetSearch');
-  },
   methods: {
     toggleFuzzySearch(event) {
       event.preventDefault();
+      event.stopPropagation();
       this.fuzzyOverlay = !this.fuzzyOverlay;
 
       if (this.fuzzyOverlay) {
@@ -119,6 +117,7 @@ export default {
     hideFuzzySearch(event) {
       if (this.fuzzyOverlay) {
         event.preventDefault();
+        event.stopPropagation();
         this.fuzzyOverlay = false;
         this.$store.commit('results', this.results.map(r => r.id));
       }
@@ -155,6 +154,15 @@ export default {
             <span :class="result.matches.some(r => r.key === 'ReportDate') ? 'pink darken-3' : ''">
               {{ result.reportDate }}
             </span>
+            <span v-if="result.matches.some(r => r.key === 'Report')">
+              -
+              <span class="pink darken-3">
+                Match in report
+              </span>
+            </span>
+            <span>
+              - Score: {{ result.score }}
+            </span>
           </div>
         </VContainer>
       </VCard>
@@ -166,7 +174,7 @@ export default {
     </VDialog>
     <VRow dense class="justify-center">
       <VCol cols="12" lg="9">
-        <HomeInfoBox class="mb-2" :changelog="appChangelog" />
+        <HomeInfoBox class="mb-2" :toggle-fuzzy="toggleFuzzySearch" :changelog="appChangelog" />
         <HomeSearchBox :cache="poiCache" class="mb-2" />
         <AsyncHomeSearchResultsBox :cache="poiCache" />
       </VCol>

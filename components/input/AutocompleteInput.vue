@@ -37,7 +37,6 @@ export default {
     this.$EventBus.$on('blur-fields', input => {
       if (this.$refs.input && this.$refs.input._uid !== input._uid) {
         this.$refs.input.blur();
-        this.$store.commit('resetSearch');
       }
     });
   },
@@ -47,10 +46,7 @@ export default {
       this.$EventBus.$emit('blur-fields', this.$refs.input);
       this.$refs.input.focus();
       this.$store.commit('resetSearch');
-
-      this.$vuetify.goTo(0).then(() => {
-        this.$store.commit('resetSearch');
-      });
+      this.$vuetify.goTo(0);
     },
     input($event) {
       this.$emit('input', $event);
@@ -64,16 +60,13 @@ export default {
   <VAutocomplete
     ref="input"
     v-hotkey="keymap"
-
     :label="label"
     :items="items"
     :value="value"
-
     outlined
     hide-details
     auto-select-first
     autocomplete="off"
-
     @input="input($event)"
   />
 </template>

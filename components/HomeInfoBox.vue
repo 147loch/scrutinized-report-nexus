@@ -9,6 +9,10 @@ export default {
     changelog: {
       type: Array,
       default: () => []
+    },
+    toggleFuzzy: {
+      type: Function,
+      default: () => {}
     }
   },
   data() {
@@ -60,6 +64,16 @@ export default {
             {{ $version }}
           </VChip>
           <VSpacer />
+          <VBtn
+            icon
+            small
+
+            class="mr-5"
+
+            @click="toggleFuzzy($event)"
+          >
+            <VIcon>mdi-magnify</VIcon>
+          </VBtn>
           <VDialog
             v-model="changelogModal"
             width="600"
@@ -138,7 +152,7 @@ export default {
               <p><strong>How to use it</strong> - If you have the name in the report, use it. If the name is unknown, then type in the report date.</p>
               <p><strong>Search fields</strong> - Weight and Height fields search for both the guesses values and the real values. Search is done live upon field completion.</p>
               <p><strong>Reset the app</strong> - Press Ctrl+R to reset the app to get ready to search someone else.</p>
-              <p><strong>Fuzzy search</strong> - Press Ctrl+F to open the fuzzy search input. It will only show the top 10 results based on the search score.</p>
+              <p><strong>Fuzzy search</strong> - Press Ctrl+F or Ctrl+Alt+F to open the fuzzy search input. It will only show the top 10 results based on the search score.</p>
               <p>
                 <strong>Abbreviations definition</strong>
                 <ul>

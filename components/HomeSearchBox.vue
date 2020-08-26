@@ -35,6 +35,7 @@ export default {
   methods: {
     reload(event) {
       event.preventDefault();
+      event.stopPropagation();
       this.$vuetify.goTo(0).then(() => {
         this.$store.commit('resetSearch');
       });
