@@ -79,6 +79,7 @@ export default {
     keymap() {
       return {
         'ctrl+f': this.toggleFuzzySearch,
+        'ctrl+alt+f': this.toggleFuzzySearch,
         enter: this.hideFuzzySearch
       };
     }

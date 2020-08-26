@@ -24,8 +24,7 @@ export default {
   computed: {
     reloadKeymap() {
       return {
-        'ctrl+r': this.reload,
-        'ctrl+shift+r': this.reload
+        'ctrl+r': this.reload
       };
     },
     search() {
