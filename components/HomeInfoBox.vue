@@ -22,14 +22,6 @@ export default {
     };
   },
   computed: {
-    timer: {
-      set(value) {
-        this.$store.commit('settings', {key: 'timer', value});
-      },
-      get() {
-        return this.$store.state.settings.timer;
-      }
-    },
     sort: {
       set(value) {
         this.$store.commit('settings', {key: 'sort', value});
@@ -170,13 +162,6 @@ export default {
               <div class="grey--text text-subtitle-1 mt-2">
                 App settings
               </div>
-              <VSwitch
-                v-model="timer"
-
-                class="mt-1"
-                label="Enable the timer"
-                hide-details
-              />
               <VSwitch
                 v-model="sort"
 

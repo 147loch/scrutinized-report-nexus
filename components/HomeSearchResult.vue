@@ -46,7 +46,7 @@ export default {
     <VContainer fluid>
       <VRow no-gutters>
         <VCol cols="4" lg="3">
-          <VImg style="border-radius: 4px;" :src="btoimg(data.Avatar[0].ImageData)" eager>
+          <VImg style="border-radius: 4px;" :src="btoimg(data.Avatar[0].ImageData)">
             <VRow align="end" class="lightbox white--text pa-3 fill-height" no-gutters>
               <VCol>
                 <div class="white--text text-h5 font-weight-normal">

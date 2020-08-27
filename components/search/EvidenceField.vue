@@ -65,7 +65,7 @@ export default {
         <VContainer :key="`${i}-1`" fluid>
           <VRow no-gutters>
             <VCol cols="4" lg="3">
-              <VImg :src="btoimg(phone.data.ThumbNail)" eager />
+              <VImg :src="btoimg(phone.data.ThumbNail)" />
             </VCol>
             <VCol cols="8" lg="9" class="pl-3">
               <h4 class="grey--text text--lighten-1 font-weight-light">

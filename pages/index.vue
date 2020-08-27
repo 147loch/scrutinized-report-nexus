@@ -2,19 +2,10 @@
 import pako from 'pako';
 import Fuse from 'fuse.js';
 
-import WireframeLoader from '@/components/search/WireframeLoader';
-
 const CACHE_ITEMS = 40;
 const CHANGELOG_URL = 'https://gist.githubusercontent.com/147loch/22746bd7470840377db20f0b1fcadc66/raw/srn-changelog.json';
 
 export default {
-  components: {
-    AsyncHomeSearchResultsBox: () => ({
-      component: import('@/components/HomeSearchResultsBox'),
-      loading: WireframeLoader,
-      delay: 50
-    })
-  },
   async asyncData() {
     const fuseOptions = {
       includeScore: true,
@@ -55,8 +46,6 @@ export default {
       return accumulator;
     }, {data: {}});
 
-    console.log(poiCache);
-
     return {
       poiCache,
       appChangelog,
@@ -72,10 +61,6 @@ export default {
     };
   },
   computed: {
-    displayTimer() {
-      return this.$store.state.settings.timer;
-    },
-
     keymap() {
       return {
         'ctrl+f': this.toggleFuzzySearch,
@@ -95,8 +80,8 @@ export default {
           matches: r.matches,
           score: `${Math.round((1 - r.score) * 100)}%`
         }));
-        this.results = results.slice(0, 10);
-        this.resultsTruncated = results.length - 10;
+        this.results = results.slice(0, 5);
+        this.resultsTruncated = results.length - 5;
       }
     }
   },
@@ -177,10 +162,7 @@ export default {
       <VCol cols="12" lg="9">
         <HomeInfoBox class="mb-2" :toggle-fuzzy="toggleFuzzySearch" :changelog="appChangelog" />
         <HomeSearchBox :cache="poiCache" class="mb-2" />
-        <AsyncHomeSearchResultsBox :cache="poiCache" />
-      </VCol>
-      <VCol v-show="displayTimer" cols="12" :lg="displayTimer ? 3 : 12" class="follower-wrapper">
-        <HelperColumn class="follower" />
+        <HomeSearchResultsBox :cache="poiCache" />
       </VCol>
     </VRow>
   </VMain>

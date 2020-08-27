@@ -14,7 +14,6 @@ const getDefaultState = () => ({
   },
   results: [],
   settings: {
-    timer: false,
     sort: true,
     customSort: [
       {type: 'PICTURE', name: 'Pictures'},

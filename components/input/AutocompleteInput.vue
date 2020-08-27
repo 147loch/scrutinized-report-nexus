@@ -34,23 +34,31 @@ export default {
     }
   },
   mounted() {
-    this.$EventBus.$on('blur-fields', input => {
-      if (this.$refs.input && this.$refs.input._uid !== input._uid) {
-        this.$refs.input.blur();
-      }
-    });
+    this.$EventBus.$on('blur-fields', this.fn);
+  },
+  beforeDestroy() {
+    this.$EventBus.$off('blur-fields', this.fn);
   },
   methods: {
     focus(event) {
       event.preventDefault();
       this.$EventBus.$emit('blur-fields', this.$refs.input);
-      this.$refs.input.focus();
       this.$store.commit('resetSearch');
       this.$vuetify.goTo(0);
+
+      this.$nextTick(() => {
+        this.$refs.input.focus();
+      });
     },
     input($event) {
       this.$emit('input', $event);
       this.$search(this.cache);
+    },
+
+    fn(input) {
+      if (this.$refs.input && this.$refs.input._uid !== input._uid) {
+        this.$refs.input.blur();
+      }
     }
   }
 };
