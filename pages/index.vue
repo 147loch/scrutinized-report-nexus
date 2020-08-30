@@ -25,7 +25,6 @@ export default {
     }
 
     const chunks = await Promise.all(awaitArray);
-
     const appChangelog = chunks[0];
 
     const poiCache = chunks.slice(1).reduce((accumulator, current) => {
