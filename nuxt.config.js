@@ -51,7 +51,6 @@ export default {
   plugins: [
     {src: '@/plugins/vue-hotkey.js', ssr: false},
     {src: '@/plugins/data-manager.js', ssr: false},
-    {src: '@/plugins/event-bus.js', ssr: false},
     {src: '@/plugins/vue-clipboard2.js', ssr: false},
     {src: '@/plugins/persistence.js', ssr: false}
   ],
