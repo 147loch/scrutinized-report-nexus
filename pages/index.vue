@@ -3,7 +3,7 @@ import pako from 'pako';
 import Fuse from 'fuse.js';
 
 const CACHE_ITEMS = 40;
-const CHANGELOG_URL = 'https://gist.githubusercontent.com/147loch/22746bd7470840377db20f0b1fcadc66/raw/srn-changelog.json';
+const CHANGELOG_URL = 'https://gist.githubusercontent.com/lutonite/22746bd7470840377db20f0b1fcadc66/raw/srn-changelog.json';
 
 export default {
   async asyncData() {
